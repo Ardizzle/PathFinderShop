@@ -1,0 +1,18 @@
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[UserLogin](
+	[UserLoginId] [uniqueidentifier] NOT NULL,
+	[AppUserId] [uniqueidentifier] NOT NULL,
+	[Provider] [varchar](50) NOT NULL,
+	[ProviderUserId] [varchar](max) NOT NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[UserLogin] ADD  CONSTRAINT [PK_UserLogin] PRIMARY KEY CLUSTERED 
+(
+	[UserLoginId] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[UserLogin] ADD  CONSTRAINT [DEFAULT_UserLogin_UserLoginId]  DEFAULT (newid()) FOR [UserLoginId]
+GO

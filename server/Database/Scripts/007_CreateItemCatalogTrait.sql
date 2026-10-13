@@ -1,0 +1,14 @@
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ItemCatalogTrait](
+	[ItemCatalogId] [uniqueidentifier] NOT NULL,
+	[TraitId] [uniqueidentifier] NULL
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[ItemCatalogTrait] ADD  CONSTRAINT [PK_ItemCatalogTrait] PRIMARY KEY CLUSTERED 
+(
+	[ItemCatalogId] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
