@@ -1,36 +1,18 @@
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[Shop](
-	[ShopId] [uniqueidentifier] NOT NULL,
-	[UserId] [uniqueidentifier] NOT NULL,
-	[IsActive] [bit] NOT NULL,
-	[ShopName] [varchar](200) NOT NULL,
-	[ShopKeeperName] [varchar](200) NOT NULL,
-	[ShopKeeperDescription] [varchar](max) NOT NULL,
-	[ShopDescription] [varchar](max) NOT NULL,
-	[GameMasterNotes] [varchar](max) NOT NULL,
-	[ItemCostPercentIncrease] [decimal](18, 4) NOT NULL,
-	[CampaignId] [uniqueidentifier] NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-GO
-ALTER TABLE [dbo].[Shop] ADD  CONSTRAINT [PK_Shop] PRIMARY KEY CLUSTERED 
-(
-	[ShopId] ASC
-)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-GO
-ALTER TABLE [dbo].[Shop] ADD  CONSTRAINT [DEFAULT_Shop_ShopId]  DEFAULT (newid()) FOR [ShopId]
-GO
-ALTER TABLE [dbo].[Shop] ADD  CONSTRAINT [DEFAULT_Shop_ShopName]  DEFAULT ('') FOR [ShopName]
-GO
-ALTER TABLE [dbo].[Shop] ADD  CONSTRAINT [DEFAULT_Shop_ShopKeeperName]  DEFAULT ('') FOR [ShopKeeperName]
-GO
-ALTER TABLE [dbo].[Shop] ADD  CONSTRAINT [DEFAULT_Shop_ShopKeeperDescription]  DEFAULT ('') FOR [ShopKeeperDescription]
-GO
-ALTER TABLE [dbo].[Shop] ADD  CONSTRAINT [DEFAULT_Shop_ShopDescription]  DEFAULT ('') FOR [ShopDescription]
-GO
-ALTER TABLE [dbo].[Shop] ADD  CONSTRAINT [DEFAULT_Shop_GameMasterNotes]  DEFAULT ('') FOR [GameMasterNotes]
-GO
-ALTER TABLE [dbo].[Shop] ADD  CONSTRAINT [DEFAULT_Shop_ItemCostPercentIncrease]  DEFAULT ((0)) FOR [ItemCostPercentIncrease]
-GO
+CREATE TABLE [dbo].[Shop] (
+    [ShopId]                  UNIQUEIDENTIFIER CONSTRAINT [DEFAULT_Shop_ShopId] DEFAULT (newid()) NOT NULL,
+    [AppUserId]               UNIQUEIDENTIFIER NOT NULL,
+    [IsActive]                BIT              NOT NULL,
+    [ShopName]                VARCHAR (200)    CONSTRAINT [DEFAULT_Shop_ShopName] DEFAULT ('') NOT NULL,
+    [ShopKeeperName]          VARCHAR (200)    CONSTRAINT [DEFAULT_Shop_ShopKeeperName] DEFAULT ('') NOT NULL,
+    [ShopKeeperDescription]   VARCHAR (MAX)    CONSTRAINT [DEFAULT_Shop_ShopKeeperDescription] DEFAULT ('') NOT NULL,
+    [ShopDescription]         VARCHAR (MAX)    CONSTRAINT [DEFAULT_Shop_ShopDescription] DEFAULT ('') NOT NULL,
+    [GameMasterNotes]         VARCHAR (MAX)    CONSTRAINT [DEFAULT_Shop_GameMasterNotes] DEFAULT ('') NOT NULL,
+    [ItemCostPercentIncrease] DECIMAL (18, 4)  CONSTRAINT [DEFAULT_Shop_ItemCostPercentIncrease] DEFAULT ((0)) NOT NULL,
+    [CampaignId]              UNIQUEIDENTIFIER NULL,
+    CONSTRAINT [PK_Shop] PRIMARY KEY CLUSTERED ([ShopId] ASC),
+    CONSTRAINT [FK_Shop_AppUser] FOREIGN KEY ([AppUserId]) REFERENCES [dbo].[AppUser] ([AppUserID]),
+    CONSTRAINT [FK_Shop_Campaign] FOREIGN KEY ([CampaignId]) REFERENCES [dbo].[Campaign] ([CampaignId])
+);
+
+CREATE INDEX IX_Shop_AppUserId ON Shop (AppUserId);
+CREATE INDEX IX_Shop_CampaignId ON Shop (CampaignId);
