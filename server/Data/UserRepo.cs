@@ -34,6 +34,8 @@ public class UserRepository
         Guid appUserId = await _db.QuerySingleAsync<Guid>(insertAppUserSql, new {displayName}, transaction);
         await _db.ExecuteAsync(insertUserLoginSql, new {appUserId, provider, providerUserId}, transaction);
 
+        transaction.Commit();
+
         return appUserId;
     }
 }

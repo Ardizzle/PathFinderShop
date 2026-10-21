@@ -16,6 +16,7 @@ public static class AuthEndpoints
         app.MapGet("/login/google", LoginWithGoogle);
         app.MapGet("login/google/callback", GoogleCallback);
         app.MapGet("/me", GetCurrentUser).RequireAuthorization();
+        app.MapPost("/logout", Logout);
     }
 
     private static IResult LoginWithGoogle()
@@ -68,5 +69,10 @@ public static class AuthEndpoints
         string? displayName = user.FindFirst(ClaimTypes.Name)?.Value;
 
         return Results.Ok(new {appUserId, displayName});
+    }
+
+    private static IResult Logout()
+    {
+        return Results.SignOut(authenticationSchemes: new string[] {CookieAuthenticationDefaults.AuthenticationScheme});
     }
 }

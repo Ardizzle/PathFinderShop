@@ -11,6 +11,7 @@ string connectionString = builder.Configuration.GetConnectionString("DefaultConn
 
 builder.Services.AddScoped<IDbConnection>(_ => new SqlConnection(connectionString));
 builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<ShopRepo>();
 builder.Services.AddAppAuthentication(builder.Configuration);
 
 WebApplication app = builder.Build();
@@ -21,5 +22,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapAuthEndpoints();
+app.MapShopEndpoints();
 
 app.Run();

@@ -1,7 +1,7 @@
 CREATE TABLE [dbo].[Shop] (
     [ShopId]                  UNIQUEIDENTIFIER CONSTRAINT [DEFAULT_Shop_ShopId] DEFAULT (newid()) NOT NULL,
     [AppUserId]               UNIQUEIDENTIFIER NOT NULL,
-    [IsActive]                BIT              NOT NULL,
+    [IsActive]                BIT              CONSTRAINT [DEFAULT_Shop_IsActive] DEFAULT 0 NOT NULL,
     [ShopName]                VARCHAR (200)    CONSTRAINT [DEFAULT_Shop_ShopName] DEFAULT ('') NOT NULL,
     [ShopKeeperName]          VARCHAR (200)    CONSTRAINT [DEFAULT_Shop_ShopKeeperName] DEFAULT ('') NOT NULL,
     [ShopKeeperDescription]   VARCHAR (MAX)    CONSTRAINT [DEFAULT_Shop_ShopKeeperDescription] DEFAULT ('') NOT NULL,
